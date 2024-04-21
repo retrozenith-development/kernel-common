@@ -119,75 +119,6 @@ MODULE_PARM_DESC(skip_validation, "Skip unit descriptor validation (default: no)
 static DEFINE_MUTEX(register_mutex);
 static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
 static struct usb_driver usb_audio_driver;
-static struct snd_usb_audio_vendor_ops *usb_vendor_ops;
-
-int snd_vendor_set_ops(struct snd_usb_audio_vendor_ops *ops)
-{
-	if ((!ops->connect) ||
-	    (!ops->disconnect) ||
-	    (!ops->set_interface) ||
-	    (!ops->set_pcm_intf) ||
-	    (!ops->set_pcm_connection))
-		return -EINVAL;
-
-	usb_vendor_ops = ops;
-	return 0;
-}
-EXPORT_SYMBOL_GPL(snd_vendor_set_ops);
-
-struct snd_usb_audio_vendor_ops *snd_vendor_get_ops(void)
-{
-	return usb_vendor_ops;
-}
-
-static int snd_vendor_connect(struct usb_interface *intf)
-{
-	struct snd_usb_audio_vendor_ops *ops = snd_vendor_get_ops();
-
-	if (ops)
-		return ops->connect(intf);
-	return 0;
-}
-
-static void snd_vendor_disconnect(struct usb_interface *intf)
-{
-	struct snd_usb_audio_vendor_ops *ops = snd_vendor_get_ops();
-
-	if (ops)
-		ops->disconnect(intf);
-}
-
-int snd_vendor_set_interface(struct usb_device *udev,
-			     struct usb_host_interface *intf,
-			     int iface, int alt)
-{
-	struct snd_usb_audio_vendor_ops *ops = snd_vendor_get_ops();
-
-	if (ops)
-		return ops->set_interface(udev, intf, iface, alt);
-	return 0;
-}
-
-int snd_vendor_set_pcm_intf(struct usb_interface *intf, int iface, int alt,
-			    int direction, struct snd_usb_substream *subs)
-{
-	struct snd_usb_audio_vendor_ops *ops = snd_vendor_get_ops();
-
-	if (ops)
-		return ops->set_pcm_intf(intf, iface, alt, direction, subs);
-	return 0;
-}
-
-int snd_vendor_set_pcm_connection(struct usb_device *udev,
-				  enum snd_vendor_pcm_open_close onoff,
-				  int direction)
-{
-	struct snd_usb_audio_vendor_ops *ops = snd_vendor_get_ops();
-
-	if (ops)
-		return ops->set_pcm_connection(udev, onoff, direction);
-	return 0;
-}
 
 /*
  * disconnect streams
@@ -861,10 +792,6 @@ static int usb_audio_probe(struct usb_interface *intf,
 	if (err < 0)
 		return err;
 
-	err = snd_vendor_connect(intf);
-	if (err)
-		return err;
-
 	trace_android_vh_audio_usb_offload_vendor_set(intf);
 
 	/*
@@ -1023,7 +950,6 @@ static void usb_audio_disconnect(struct usb_interface *intf)
 
 	card = chip->card;
 
-	snd_vendor_disconnect(intf);
 	trace_android_rvh_audio_usb_offload_disconnect(intf);
 
 	mutex_lock(&register_mutex);
