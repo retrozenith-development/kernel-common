@@ -844,6 +844,7 @@
   __find_vma
   find_vm_area
   find_vpid
+  finish_swait
   finish_wait
   firmware_request_nowarn
   flush_dcache_page
@@ -1236,6 +1237,7 @@
   kstrtou8_from_user
   kstrtouint
   kstrtouint_from_user
+  kstrtoul_from_user
   kstrtoull
   kstrtoull_from_user
   kthread_bind
@@ -1666,6 +1668,7 @@
   prandom_u32
   preempt_schedule
   preempt_schedule_notrace
+  prepare_to_swait_exclusive
   prepare_to_wait
   prepare_to_wait_event
   print_hex_dump
@@ -1869,6 +1872,7 @@
   sched_feat_keys
   sched_setattr_nocheck
   sched_set_fifo
+  sched_set_fifo_low
   sched_set_normal
   sched_setscheduler
   sched_setscheduler_nocheck
@@ -2134,6 +2138,7 @@
   submit_bio_wait
   subsys_system_register
   suspend_set_ops
+  swake_up_one
   __sw_hweight16
   __sw_hweight32
   __sw_hweight64
