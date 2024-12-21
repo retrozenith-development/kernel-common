@@ -366,6 +366,7 @@
   device_link_add
   device_link_del
   device_match_fwnode
+  device_property_match_string
   device_property_present
   device_property_read_string
   device_property_read_u32_array
@@ -717,6 +718,7 @@
   drm_gem_vm_open
   drm_get_format_info
   drm_hdcp_update_content_protection
+  drm_hdmi_avi_infoframe_from_display_mode
   drm_hdmi_infoframe_set_hdr_metadata
   drm_helper_mode_fill_fb_struct
   drm_helper_probe_single_connector_modes
@@ -746,6 +748,7 @@
   drm_modeset_lock
   drm_modeset_lock_all_ctx
   drm_modeset_unlock
+  drm_mode_sort
   drm_mode_vrefresh
   drm_object_attach_property
   drm_open
@@ -974,6 +977,7 @@
   handle_sysrq
   hashlen_string
   have_governor_per_policy
+  hdmi_avi_infoframe_pack
   hdmi_drm_infoframe_pack_only
   hex2bin
   hex_dump_to_buffer
@@ -2317,6 +2321,7 @@
   __traceiter_android_vh_sched_setaffinity_early
   __traceiter_android_vh_scheduler_tick
   __traceiter_android_vh_setscheduler_uclamp
+  __traceiter_android_vh_set_task_comm
   __traceiter_android_vh_shrink_inactive_list_blk_plug
   __traceiter_android_vh_shrink_lruvec_blk_plug
   __traceiter_android_vh_si_meminfo
@@ -2457,6 +2462,7 @@
   __tracepoint_android_vh_sched_setaffinity_early
   __tracepoint_android_vh_scheduler_tick
   __tracepoint_android_vh_setscheduler_uclamp
+  __tracepoint_android_vh_set_task_comm
   __tracepoint_android_vh_shrink_inactive_list_blk_plug
   __tracepoint_android_vh_shrink_lruvec_blk_plug
   __tracepoint_android_vh_si_meminfo
